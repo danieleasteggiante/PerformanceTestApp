@@ -1,7 +1,5 @@
 use std::env;
-use crate::domain::user::User;
 use crate::use_cases::driver_list_case::DriverListCase;
-
 mod domain;
 mod use_cases;
 
@@ -34,7 +32,6 @@ fn execute_flow(use_case: String, config_file_relative_path: String) {
         "driver_list" => DriverListCase::new(config_file_relative_path),
         _ => panic!("Use case {} not found", use_case),
     };
-    
 }
 
 

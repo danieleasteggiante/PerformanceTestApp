@@ -1,2 +1,35 @@
-email.prova@test.it;Password123
-prova2@test.it;Password123
+{
+  "users": [
+    {
+      "email": "test@gmail.com",
+      "password": "Test@1234"
+    },
+    {
+      "email": "prova@test.it",
+      "password": "Prova@1234"
+    }
+  ],
+  "flow": [
+    {
+      "action": "login",
+      "method": "GET",
+      "endpoint": "/api/auth/login",
+      "headers": [{"Authorization": "Basic"}]
+    },
+    {
+      "action": "driver_list",
+      "method": "GET",
+      "endpoint": "/api/drivers"
+    },
+    {
+      "action": "driver_list",
+      "method": "POST",
+      "endpoint": "/api/drivers",
+        "body": {
+            "name": "John Doe",
+            "licenseNumber": "D1234567",
+            "vehicle": "Toyota Camry"
+        }
+    }
+  ]
+}
