@@ -1,21 +1,11 @@
-use serde::Deserialize;
-use crate::domain::flow_step_login::FlowStepLogin;
-use crate::domain::user::User;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
-pub trait Step {
-    fn perform(&self, users: &[User]);
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "action")]
-pub enum FlowStep {
-    login(FlowStepLogin),
-}
-
-impl Step for FlowStep {
-    fn perform(&self, users: &[User]) {
-        match self {
-            FlowStep::login(step) => step.perform(users),
-        }
-    }
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Step {
+    pub action: String,
+    pub endpoint: String,
+    pub method: String,
+    pub headers: Option<Vec<(String, String)>>,
+    pub body: Option<Value>,
 }

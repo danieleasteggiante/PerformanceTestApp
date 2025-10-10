@@ -16,7 +16,8 @@ fn get_args(name: String) -> String {
         })
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     //let use_case = get_args("-flow".to_string());
     //let config_file = get_args("-config".to_string());
     let use_case = "driver_list".to_string();
@@ -24,14 +25,15 @@ fn main() {
     if use_case.is_empty() || config_file.is_empty() {
         panic!("use case or config file missing!");
     }
-    execute_flow(use_case, config_file);
+    execute_flow(use_case, config_file).await;
 }
 
-fn execute_flow(use_case: String, config_file_relative_path: String) {
+async fn execute_flow(use_case: String, config_file_relative_path: String) {
     let result = match use_case.as_str() {
         "driver_list" => DriverListCase::new(config_file_relative_path),
         _ => panic!("Use case {} not found", use_case),
     };
+    result.execute().await;
 }
 
 

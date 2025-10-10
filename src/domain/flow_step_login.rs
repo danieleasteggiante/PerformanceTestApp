@@ -6,6 +6,7 @@ use crate::domain::user::User;
 
 #[derive(Debug, Deserialize)]
 pub(crate) struct FlowStepLogin {
+    name: String,
     endpoint: String,
     method: String,
     headers: Vec<(String, String)>,
@@ -13,7 +14,7 @@ pub(crate) struct FlowStepLogin {
 }
 
 impl FlowStepLogin {
-    pub fn perform(&self, users: &[User]) {
+    pub fn perform(&self, users: &User) {
         print!("Performing login step to endpoint: {}", self.endpoint);
         let caller = ApiCaller::new(self.endpoint.clone(), self.method.clone(), None, self.body.clone(), );
         let response = Runtime::new().unwrap().block_on(caller.post_request());

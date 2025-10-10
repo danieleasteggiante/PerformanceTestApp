@@ -1,3 +1,4 @@
+use std::sync::{Arc, Mutex};
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::{Client, Response};
 use serde_json::Value;
@@ -12,8 +13,18 @@ pub(crate) struct ApiCaller {
 }
 
 impl ApiCaller {
-    pub(crate) fn new(url: String, method: String, headers: Option<Vec<(String, String)>>, body: Option<Value>, ) -> Self { 
-        ApiCaller { url, method, headers, body, client: Client::new(), }
+    pub(crate) fn new(url: String, method: String, headers: Option<Vec<(String, String)>>, body: Option<Value>, ) -> Self {
+       ApiCaller { url, method, headers, body, client: Client::new(), }
+    }
+    
+    pub async fn get_request(&self) -> Response {
+        let mut request = self.client.request(self.method.parse().expect("Missing method!"), &self.url);
+        let headers_map = self.populate_headers_map();
+        request = request.headers(headers_map);
+        match request.send().await {
+            Ok(resp) => resp,
+            Err(e) => panic!("Errore durante la richiesta HTTP GET: {:?}", e),
+        }
     }
     
     pub(crate) async fn post_request(&self) -> Response {
@@ -22,7 +33,10 @@ impl ApiCaller {
         let headers_map = self.populate_headers_map();
         request = request.headers(headers_map);
         if let Some(ref json_body) = self.body { request = request.json(json_body); }
-        request.send().await.unwrap()
+        match request.send().await {
+            Ok(resp) => resp,
+            Err(e) => panic!("Errore durante la richiesta HTTP POST: {:?}", e),
+        }
     }
 
     fn populate_headers_map(&self) -> HeaderMap {
@@ -34,5 +48,9 @@ impl ApiCaller {
             map.insert(name, val);
             map
         })
+    }
+
+    pub fn add_user_id(&mut self, user_id: &str) {
+        self.url = self.url.replace("{user_id}", user_id);
     }
 }

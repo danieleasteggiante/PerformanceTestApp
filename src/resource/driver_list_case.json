@@ -13,8 +13,9 @@
     {
       "action": "login",
       "method": "GET",
-      "endpoint": "/api/auth/login",
-      "headers": [{"Authorization": "Basic"}]
+      "endpoint": "http://localhost:8080/api/rust/login/{email}",
+      "headers": [["Authorization", "Basic"],
+        ["Content-Type", "application/json"]]
     },
     {
       "action": "driver_list",
