@@ -2,6 +2,8 @@ use std::sync::{Arc, Mutex};
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::{Client, Response};
 use serde_json::Value;
+use crate::domain::step::Step;
+use crate::domain::user::User;
 
 #[derive(Debug)]
 pub(crate) struct ApiCaller {
@@ -13,8 +15,20 @@ pub(crate) struct ApiCaller {
 }
 
 impl ApiCaller {
+    pub(crate) fn from_step(step: &Step, user: &User) -> Self {
+        let url = step.endpoint.replace("{email}", &user.email);
+        ApiCaller::new(url, step.method.clone(), step.headers.clone(), step.body.clone())
+    }
+}
+
+impl ApiCaller {
     pub(crate) fn new(url: String, method: String, headers: Option<Vec<(String, String)>>, body: Option<Value>, ) -> Self {
        ApiCaller { url, method, headers, body, client: Client::new(), }
+    }
+    
+   pub fn from_step_with_param(step: &Step, placeholder: &String, content: &String) -> Self {
+        let url = step.endpoint.replace(placeholder, content);
+        ApiCaller::new(url, step.method.clone(), step.headers.clone(), step.body.clone())
     }
     
     pub async fn get_request(&self) -> Response {

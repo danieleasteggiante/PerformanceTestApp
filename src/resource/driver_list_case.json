@@ -1,11 +1,379 @@
 {
   "users": [
     {
-      "email": "test@gmail.com",
-      "password": "Test@1234"
+      "email": "ciccio0@test.it",
+      "password": "Prova@1234"
     },
     {
-      "email": "prova@test.it",
+      "email": "ciccio1@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio2@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio3@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio4@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio5@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio6@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio7@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio8@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio9@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio10@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio11@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio12@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio13@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio14@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio15@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio16@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio17@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio18@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio19@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio20@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio21@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio22@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio23@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio24@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio25@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio26@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio27@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio28@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio29@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio30@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio31@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio32@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio33@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio34@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio35@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio36@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio37@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio38@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio39@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio40@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio41@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio42@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio43@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio44@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio45@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio46@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio47@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio48@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio49@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio50@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio51@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio52@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio53@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio54@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio55@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio56@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio57@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio58@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio59@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio60@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio61@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio62@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio63@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio64@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio65@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio66@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio67@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio68@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio69@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio70@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio71@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio72@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio73@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio74@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio75@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio76@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio77@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio78@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio79@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio80@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio81@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio82@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio83@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio84@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio85@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio86@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio87@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio88@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio89@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio90@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio91@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio92@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio93@test.it",
       "password": "Prova@1234"
     }
   ],
@@ -20,17 +388,7 @@
     {
       "action": "driver_list",
       "method": "GET",
-      "endpoint": "/api/drivers"
-    },
-    {
-      "action": "driver_list",
-      "method": "POST",
-      "endpoint": "/api/drivers",
-        "body": {
-            "name": "John Doe",
-            "licenseNumber": "D1234567",
-            "vehicle": "Toyota Camry"
-        }
+      "endpoint": "http://localhost:8080/api/rust/drivers"
     }
   ]
 }
