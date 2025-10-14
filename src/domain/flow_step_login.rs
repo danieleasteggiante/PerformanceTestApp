@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use serde::Deserialize;
 use serde_json::Value;
 
@@ -6,6 +7,6 @@ pub(crate) struct FlowStepLogin {
     name: String,
     endpoint: String,
     method: String,
-    headers: Vec<(String, String)>,
+    headers: HashMap<String,String>,
     body: Option<Value>,
 }

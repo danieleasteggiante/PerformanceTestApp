@@ -4,10 +4,13 @@ use crate::domain::step::{Step};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FlowInput {
+    threads: usize,
+    rampup: usize,
+    max_timeout: usize,
+    intra_action_delay: usize,
     users: Vec<User>,
     flow: Vec<Step>,
 }
-
 impl FlowInput {
     pub fn from_json_file(path: String) -> Self {
         let file_content = std::fs::read_to_string(path).expect("Failed to read file");
@@ -21,11 +24,12 @@ impl FlowInput {
         differenza tra Vec e & è semplicemente che il secondo non possiede i dati ed è una gestione di RUST
     */
 
-    pub(crate) fn get_users(&self) -> &[User] {
-       return self.users.as_slice();
-    }
+    pub(crate) fn get_users(&self) -> &[User] { self.users.as_slice() }
+    pub fn get_threads(&self) -> usize { self.threads }
+    pub fn get_rampup(&self) -> usize { self.rampup }
+    pub fn get_max_timeout(&self) -> usize { self.max_timeout }
+    pub fn get_intra_action_delay(&self) -> usize { self.intra_action_delay}
+    pub fn get_steps(&self) -> &[Step] { self.flow.as_slice() }
+
     
-    pub fn get_step_by_name(&self, name: &str) -> Option<&Step> {
-        self.flow.iter().find(|step| step.action == name)
-    }
 }

@@ -1,4 +1,8 @@
 {
+  "threads": 10,
+  "rampup": 5,
+  "max_timeout": 5,
+  "intra_action_delay": 1,
   "users": [
     {
       "email": "ciccio0@test.it",
@@ -375,6 +379,30 @@
     {
       "email": "ciccio93@test.it",
       "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio94@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio95@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio96@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio97@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio98@test.it",
+      "password": "Prova@1234"
+    },
+    {
+      "email": "ciccio99@test.it",
+      "password": "Prova@1234"
     }
   ],
   "flow": [
@@ -382,8 +410,10 @@
       "action": "login",
       "method": "GET",
       "endpoint": "http://localhost:8080/api/rust/login/{email}",
-      "headers": [["Authorization", "Basic"],
-        ["Content-Type", "application/json"]]
+      "headers": {
+        "Authorization": "Basic",
+        "Content-Type": "application/json"
+      }
     },
     {
       "action": "driver_list",

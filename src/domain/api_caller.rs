@@ -1,70 +1,42 @@
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-use reqwest::{Client, Response};
+use reqwest::{get, Client, Response};
 use serde_json::Value;
+use crate::domain::context::Context;
 use crate::domain::step::Step;
 use crate::domain::user::User;
 
 #[derive(Debug)]
 pub(crate) struct ApiCaller {
-    url: String,
-    method: String,
-    headers: Option<Vec<(String, String)>>,
-    body: Option<Value>,
-    client: Client,
 }
 
 impl ApiCaller {
-    pub(crate) fn from_step(step: &Step, user: &User) -> Self {
+    pub(crate) async fn call(step: &Step, context: &Context, user: &User) -> Response {
+        let client = Client::new();
         let url = step.endpoint.replace("{email}", &user.email);
-        ApiCaller::new(url, step.method.clone(), step.headers.clone(), step.body.clone())
-    }
-}
-
-impl ApiCaller {
-    pub(crate) fn new(url: String, method: String, headers: Option<Vec<(String, String)>>, body: Option<Value>, ) -> Self {
-       ApiCaller { url, method, headers, body, client: Client::new(), }
-    }
-    
-   pub fn from_step_with_param(step: &Step, placeholder: &String, content: &String) -> Self {
-        let url = step.endpoint.replace(placeholder, content);
-        ApiCaller::new(url, step.method.clone(), step.headers.clone(), step.body.clone())
-    }
-    
-    pub async fn get_request(&self) -> Response {
-        let mut request = self.client.request(self.method.parse().expect("Missing method!"), &self.url);
-        let headers_map = self.populate_headers_map();
+        let mut request = client.request(step.method.to_string().parse().expect("Missing method!"), url);
+        let headers_map = ApiCaller::populate_headers_map(context, step);
         request = request.headers(headers_map);
-        match request.send().await {
-            Ok(resp) => resp,
-            Err(e) => panic!("Errore durante la richiesta HTTP GET: {:?}", e),
+        request.send().await.expect("Errore durante la richiesta HTTP Login")
+    }
+
+    fn populate_headers_map(context: &Context, step: &Step) -> HeaderMap {
+        let mut headers = HeaderMap::new();
+        if let Some(step_headers) = &step.headers {
+            ApiCaller::add_headers(&mut headers, step_headers);
         }
+        ApiCaller::add_headers(&mut headers, &context.data);
+        headers
+    }
+
+    fn add_headers(headers: &mut HeaderMap, source: &HashMap<String,String>) {
+      source.iter().for_each(|(k,v)| {
+          if k.is_empty() || v.is_empty() { return; }
+          let header_name = HeaderName::from_bytes(k.as_bytes()).expect("Invalid header name");
+          let header_value = HeaderValue::from_str(v).expect("Invalid header value");
+          headers.insert(header_name, header_value);
+      })
     }
     
-    pub(crate) async fn post_request(&self) -> Response {
-        // String.parse es.: "test".parse() can parse into any type that implements the FromStr trait.
-        let mut request = self.client.request(self.method.parse().expect("Missing method!"), &self.url);
-        let headers_map = self.populate_headers_map();
-        request = request.headers(headers_map);
-        if let Some(ref json_body) = self.body { request = request.json(json_body); }
-        match request.send().await {
-            Ok(resp) => resp,
-            Err(e) => panic!("Errore durante la richiesta HTTP POST: {:?}", e),
-        }
-    }
-
-    fn populate_headers_map(&self) -> HeaderMap {
-        if self.headers.is_none() { return HeaderMap::new(); }
-        let headers_list = self.headers.as_ref().unwrap();
-        headers_list.iter().fold(HeaderMap::new(), |mut map, (key, value)| {
-            let name = HeaderName::from_bytes(key.as_bytes()).expect("Not valid header name");
-            let val  = HeaderValue::from_str(value).expect("Not valid header value");
-            map.insert(name, val);
-            map
-        })
-    }
-
-    pub fn add_user_id(&mut self, user_id: &str) {
-        self.url = self.url.replace("{user_id}", user_id);
-    }
 }
