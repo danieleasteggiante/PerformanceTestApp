@@ -1,7 +1,7 @@
 {
   "threads": 10,
   "rampup": 100,
-  "intra_action_delay": 1,
+  "intra_action_delay": 100,
   "users": [
     {
       "email": "ciccio0@test.it",

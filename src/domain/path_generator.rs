@@ -1,9 +1,7 @@
 use std::env;
 use std::path::Path;
 
-pub(crate) struct PathGenerator {
-    path: String,
-}
+pub(crate) struct PathGenerator {}
 
 impl PathGenerator {
     pub fn from_string(base_path: &str) -> String {

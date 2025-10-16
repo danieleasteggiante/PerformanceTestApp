@@ -1,6 +1,4 @@
-use std::cmp::PartialEq;
 use std::collections::HashMap;
-use reqwest::Response;
 use crate::domain::step::{Step, StepMethod};
 
 pub struct Context {
@@ -20,7 +18,7 @@ impl Context {
     }
 
     pub fn get(&self, key: &str) -> Option<&String> {
-        self.get(key)
+        self.data.get(key)
     }
     
     pub fn update(&mut self, step: &Step, body: &String) { 

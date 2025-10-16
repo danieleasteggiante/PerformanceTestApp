@@ -8,6 +8,7 @@ use crate::domain::path_generator::PathGenerator;
 use crate::domain::user::User;
 use futures::stream::{self, StreamExt};
 use reqwest::Response;
+use tokio::task;
 use crate::domain::response_wrapper::ResponseWrapper;
 
 
@@ -28,19 +29,17 @@ impl FlowExecutor {
         let now = std::time::Instant::now();
         let rampup = self.flow_input.get_rampup();
         stream::iter(self.flow_input.get_users().into_iter().enumerate())
-           .map(|(i,u)| self.organize_rampup(rampup, i, u))
-           .buffer_unordered(self.flow_input.get_threads())
-           .collect::<Vec<_>>()
-           .await;
-       println!("Total time elapsed: {:?}", now.elapsed());
+            .map(|(i,u)| self.organize_rampup(rampup, i, u))
+            .buffer_unordered(self.flow_input.get_threads())
+            .collect::<Vec<_>>()
+            .await;
+        println!("Total time elapsed: {:?}", now.elapsed());
     }
-
-    fn organize_rampup(&self, rampup: usize, i: usize, u: &User) -> impl Future<Output=ResponseWrapper> {
+    async fn organize_rampup(&self, rampup: usize, i: usize, u: &User) -> ResponseWrapper {
         let delay = Duration::from_millis(rampup as u64 * i as u64);
-        async move {
-            sleep(delay).await;
-            self.perform_flow(u).await
-        }
+        sleep(delay).await;
+        println!("Running flow per user {} - index {}", u.email, i);
+        self.perform_flow(u).await
     }
     // per eseguire questi step in parallelo, usiamo stream::iter per creare uno stream di
     // futures da eseguire dopo e il valore di ritorno sara -> impl Stream<Item = impl Future<Output = Response> + 'a> + 'a
@@ -55,12 +54,13 @@ impl FlowExecutor {
             let body = response.text().await.unwrap_or_default();
             context.update(s, &body);
             responses.add(body);
+            let delay = Duration::from_millis(self.flow_input.get_intra_action_delay() as u64);
+            sleep(delay).await;
         }
         responses
     }
 
     async fn perform_step(&self, user: &User, context: &mut Context, s: &Step) -> Response {
-        println!("Performing step: {} for user: {}", s.action, user.email);
         let api_caller = ApiCaller::call(s, context, user);
         let response = api_caller.await;
         response

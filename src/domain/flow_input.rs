@@ -12,8 +12,7 @@ pub struct FlowInput {
 impl FlowInput {
     pub fn from_json_file(path: String) -> Self {
         let file_content = std::fs::read_to_string(path).expect("Failed to read file");
-        let mut flow : FlowInput = serde_json::from_str(&file_content).expect("Failed to parse JSON");
-        flow
+        serde_json::from_str(&file_content).expect("Failed to parse JSON")
     }
     /*
       // esempi di conversione tra Vec<T>, a &[T]
