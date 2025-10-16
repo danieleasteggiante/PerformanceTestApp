@@ -1,3 +1,5 @@
+use tokio::time::{sleep, Duration};
+
 use crate::domain::context::Context;
 use crate::domain::api_caller::ApiCaller;
 use crate::domain::flow_input::{FlowInput};
@@ -7,6 +9,7 @@ use crate::domain::user::User;
 use futures::stream::{self, StreamExt};
 use reqwest::Response;
 use crate::domain::response_wrapper::ResponseWrapper;
+
 
 pub struct FlowExecutor {
     flow_input: FlowInput,
@@ -22,17 +25,23 @@ impl FlowExecutor {
         FlowExecutor { flow_input, response: None }
     }
     pub async fn execute(&self) {
-       let now = std::time::Instant::now();
-
-        stream::iter(self.flow_input.get_users())
-           .map(|u| self.perform_flow(u))
+        let now = std::time::Instant::now();
+        let rampup = self.flow_input.get_rampup();
+        stream::iter(self.flow_input.get_users().into_iter().enumerate())
+           .map(|(i,u)| self.organize_rampup(rampup, i, u))
            .buffer_unordered(self.flow_input.get_threads())
            .collect::<Vec<_>>()
            .await;
-
        println!("Total time elapsed: {:?}", now.elapsed());
     }
 
+    fn organize_rampup(&self, rampup: usize, i: usize, u: &User) -> impl Future<Output=ResponseWrapper> {
+        let delay = Duration::from_millis(rampup as u64 * i as u64);
+        async move {
+            sleep(delay).await;
+            self.perform_flow(u).await
+        }
+    }
     // per eseguire questi step in parallelo, usiamo stream::iter per creare uno stream di
     // futures da eseguire dopo e il valore di ritorno sara -> impl Stream<Item = impl Future<Output = Response> + 'a> + 'a
     // ma dopo andranno iterati perchè ritorna una lista, e non verranno eseguiti in serie.
@@ -51,6 +60,7 @@ impl FlowExecutor {
     }
 
     async fn perform_step(&self, user: &User, context: &mut Context, s: &Step) -> Response {
+        println!("Performing step: {} for user: {}", s.action, user.email);
         let api_caller = ApiCaller::call(s, context, user);
         let response = api_caller.await;
         response

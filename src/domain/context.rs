@@ -7,8 +7,6 @@ pub struct Context {
     pub(crate) data: HashMap<String, String>,
 }
 
-
-
 impl Context {
     pub fn new() -> Self {
         Context { data: HashMap::new() }

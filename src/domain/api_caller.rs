@@ -1,24 +1,40 @@
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::time::Duration;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-use reqwest::{get, Client, Response};
-use serde_json::Value;
+use reqwest::{Client, RequestBuilder, Response};
 use crate::domain::context::Context;
 use crate::domain::step::Step;
 use crate::domain::user::User;
 
 #[derive(Debug)]
-pub(crate) struct ApiCaller {
-}
+pub(crate) struct ApiCaller {}
 
 impl ApiCaller {
     pub(crate) async fn call(step: &Step, context: &Context, user: &User) -> Response {
-        let client = Client::new();
+        let request = Self::compose_request_builder(step, context, user);
+        Self::perform_request(user, request).await
+    }
+
+    fn compose_request_builder(step: &Step, context: &Context, user: &User) -> RequestBuilder {
+        let client = Client::builder()
+            .timeout(Duration::from_secs(step.max_timeout.unwrap_or(1000)))
+            .build().expect("Error while creation HTTP Client");
         let url = step.endpoint.replace("{email}", &user.email);
         let mut request = client.request(step.method.to_string().parse().expect("Missing method!"), url);
         let headers_map = ApiCaller::populate_headers_map(context, step);
         request = request.headers(headers_map);
-        request.send().await.expect("Errore durante la richiesta HTTP Login")
+        request
+    }
+
+    async fn perform_request(user: &User, request: RequestBuilder) -> Response {
+        let response = request.send().await;
+        match response {
+            Ok(resp) => resp,
+            Err(e) => {
+                println!("Error during API call for user {}: {}", user.email, e);
+                panic!("Error during API call for user {}: {}", user.email, e);
+            },
+        }
     }
 
     fn populate_headers_map(context: &Context, step: &Step) -> HeaderMap {

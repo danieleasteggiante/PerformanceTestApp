@@ -1,7 +1,6 @@
 {
   "threads": 10,
-  "rampup": 5,
-  "max_timeout": 5,
+  "rampup": 100,
   "intra_action_delay": 1,
   "users": [
     {
@@ -409,6 +408,7 @@
     {
       "action": "login",
       "method": "GET",
+      "max_timeout": 5000,
       "endpoint": "http://localhost:8080/api/rust/login/{email}",
       "headers": {
         "Authorization": "Basic",

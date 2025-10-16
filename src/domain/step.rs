@@ -11,6 +11,9 @@ pub struct Step {
     pub method: StepMethod,
     pub headers: Option<HashMap<String, String>>,
     pub body: Option<Value>,
+    #[serde(default = "default_max_timeout")]
+    pub max_timeout: Option<u64>,
+
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -24,13 +27,16 @@ pub enum StepMethod {
 impl Display for StepMethod {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            StepMethod::Login => write!(f, "login"),
-            StepMethod::Post => write!(f, "post"),
-            StepMethod::Get => write!(f, "get"),
+            StepMethod::Login => write!(f, "LOGIN"),
+            StepMethod::Post => write!(f, "POST"),
+            StepMethod::Get => write!(f, "GET"),
         }
     }
 }
 
+fn default_max_timeout() -> Option<u64> {
+    Some(1000)
+}
 
 impl PartialEq<StepMethod> for &Step {
     fn eq(&self, other: &StepMethod) -> bool {
