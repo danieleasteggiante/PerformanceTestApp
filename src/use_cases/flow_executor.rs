@@ -32,7 +32,7 @@ impl FlowExecutor {
             .enumerate()
             .map(|(i, u)| self.organize_rampup(rampup, i, u))
             .collect();
-
+        println!("All flows executed. Collected {} responses.", responses.len());
         println!("Total time elapsed: {:?}", now.elapsed());
     }
     fn organize_rampup(&self, rampup: usize, i: usize, u: &User) -> ResponseWrapper {
