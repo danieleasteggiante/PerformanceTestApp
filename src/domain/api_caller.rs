@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::sync::Arc;
 use std::time::Duration;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use reqwest::blocking::{Client, RequestBuilder, Response};

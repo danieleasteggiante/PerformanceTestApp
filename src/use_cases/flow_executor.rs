@@ -24,17 +24,26 @@ impl FlowExecutor {
     }
     pub fn execute(&self) {
         let users = self.flow_input.get_users();
-        let rampup = self.flow_input.get_rampup();
         let now = std::time::Instant::now();
+        let mut result = vec![];
+        users.chunks(self.flow_input.get_threads()).enumerate()
+            .for_each(|(batch_idx, batch)| {
+                println!("Batch {}/{}", batch_idx+1, users.len()/batch.len());
+                result.push(self.perform_batch_work(batch, self.flow_input.get_rampup()));
+                println!("Completed batch {}", batch_idx);
+        });
+        println!("Total time elapsed: {:?}", now.elapsed());
+    }
 
+    fn perform_batch_work(&self, users: &[User], rampup: usize) -> Vec<ResponseWrapper> {
         let responses: Vec<ResponseWrapper> = users
             .par_iter()
             .enumerate()
             .map(|(i, u)| self.organize_rampup(rampup, i, u))
             .collect();
-        println!("All flows executed. Collected {} responses.", responses.len());
-        println!("Total time elapsed: {:?}", now.elapsed());
+        responses
     }
+
     fn organize_rampup(&self, rampup: usize, i: usize, u: &User) -> ResponseWrapper {
         let time_per_user = rampup as u64 * i as u64;
         let delay = Duration::from_millis(time_per_user);
