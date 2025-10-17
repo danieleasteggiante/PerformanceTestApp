@@ -1,6 +1,6 @@
 {
   "threads": 10,
-  "rampup": 100,
+  "rampup": 1000,
   "intra_action_delay": 100,
   "users": [
     {

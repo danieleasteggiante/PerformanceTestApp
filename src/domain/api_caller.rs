@@ -1,7 +1,9 @@
 use std::collections::HashMap;
+use std::sync::Arc;
 use std::time::Duration;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-use reqwest::{Client, RequestBuilder, Response};
+use reqwest::blocking::{Client, RequestBuilder, Response};
+
 use crate::domain::context::Context;
 use crate::domain::step::Step;
 use crate::domain::user::User;
@@ -10,9 +12,9 @@ use crate::domain::user::User;
 pub(crate) struct ApiCaller {}
 
 impl ApiCaller {
-    pub(crate) async fn call(step: &Step, context: &Context, user: &User) -> Response {
+    pub(crate) fn call(step: &Step, context: &Context, user: &User) -> Response {
         let request = Self::compose_request_builder(step, context, user);
-        Self::perform_request(user, request).await
+        Self::perform_request(user, request)
     }
 
     fn compose_request_builder(step: &Step, context: &Context, user: &User) -> RequestBuilder {
@@ -26,8 +28,8 @@ impl ApiCaller {
         request
     }
 
-    async fn perform_request(user: &User, request: RequestBuilder) -> Response {
-        let response = request.send().await;
+    fn perform_request(user: &User, request: RequestBuilder) -> Response {
+        let response = request.send();
         match response {
             Ok(resp) => resp,
             Err(e) => {
